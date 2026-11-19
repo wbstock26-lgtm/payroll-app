@@ -616,6 +616,14 @@ function PayrollContent() {
       ...activePeriods.map(() => ({ wch: 10 })),
     ];
 
+    // Pay period 날짜 셀 병합 (B~H): 각 직원 블록의 row 11
+    ws["!merges"] = (ws["!merges"] ?? []).concat(
+      allEmpData.map((_, ei) => ({
+        s: { r: 10 + ei * 35, c: 1 },
+        e: { r: 10 + ei * 35, c: 7 },
+      }))
+    );
+
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Pay Stubs");
     XLSX.writeFile(wb, `PayStub_${startDate}_${endDate}.xlsx`);
