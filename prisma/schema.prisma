@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./payroll.db"
+}
+
+// Key/value settings stored in the database (e.g. key "employees" = JSON employee list).
+// Created on demand by app/api/employees/route.ts with the same columns.
+model AppSetting {
+  key       String @id
+  value     String
+  updatedAt String
+}
+
+model PayrollEntry {
+  id          String   @id @default(cuid())
+  periodStart String   @unique
+  data        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
